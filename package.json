@@ -53,5 +53,14 @@
     "sync",
     "backup"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiboujiang/dsh-repo-sync.git"
+  },
+  "homepage": "https://github.com/aiboujiang/dsh-repo-sync#readme",
+  "bugs": {
+    "url": "https://github.com/aiboujiang/dsh-repo-sync/issues"
+  },
+  "author": "aiboujiang"
 }
