@@ -59,6 +59,7 @@ const DEFAULTS = {
   extraRepos: '',
   collectScript: '',
   onlySelected: false,
+  mirrors: '',
   commitMessage: '',
   pushOnStart: false,
 }
@@ -75,6 +76,7 @@ try {
     extraRepos: z.string().default('').extra('volatile', true),
     collectScript: z.string().default('').extra('volatile', true),
     onlySelected: z.boolean().default(false).extra('volatile', true),
+    mirrors: z.string().default('').extra('volatile', true),
     commitMessage: z.string().default('').extra('volatile', true),
     pushOnStart: z.boolean().default(false).extra('volatile', true),
   })
@@ -158,6 +160,7 @@ export function apply(ctx, rawConfig) {
     if ('extraRepos' in p) o.extraRepos = String(p.extraRepos ?? '').trim().slice(0, 4000)
     if ('collectScript' in p) o.collectScript = String(p.collectScript ?? '').trim().slice(0, 1000)
     if ('onlySelected' in p) o.onlySelected = Boolean(p.onlySelected)
+    if ('mirrors' in p) o.mirrors = String(p.mirrors ?? '').trim().slice(0, 4000)
     if ('pushOnStart' in p) o.pushOnStart = Boolean(p.pushOnStart)
     for (const k of ['workspaceRoot', 'commitMessage']) {
       if (k in p) o[k] = String(p[k] ?? '').trim().slice(0, 1000)
@@ -366,6 +369,25 @@ export function apply(ctx, rawConfig) {
         else logf('采集脚本跑完了')
       } else {
         logf(`采集脚本不存在，跳过：${script}`)
+      }
+    }
+
+    // ⭐ 0.5) 镜像：把采集产出的目录复制到目标目录（比如 dsh-config → dsh-private/config）
+    //    每行格式：源绝对路径 => 目标绝对路径
+    //    为什么要这一步：采集脚本只把 ~/.dsh 的东西写进暂存仓库，
+    //    暂存仓库本身没有 remote、也不在同步范围里 —— 得靠这个把它搬进真正会推的仓库。
+    if (cfg.mirrors) {
+      for (const raw of String(cfg.mirrors).split('\n')) {
+        const line = raw.trim()
+        if (!line || line.startsWith('#')) continue
+        const m = line.match(/^(.+?)\s*=>\s*(.+)$/)
+        if (!m) { logf(`镜像规则格式不对，跳过：${line}`); continue }
+        const src = m[1].trim()
+        const dst = m[2].trim()
+        if (!existsSync(src)) { logf(`镜像源不存在，跳过：${src}`); continue }
+        const r = await runShell('rsync', ['-a', '--delete', '--exclude=.git', src + '/', dst + '/'], 120_000)
+        if (!r.ok) logf(`镜像失败 ${src} → ${dst}：${r.err || r.out || 'exit ' + r.code}`)
+        else logf(`已镜像 ${src} → ${dst}`)
       }
     }
 
