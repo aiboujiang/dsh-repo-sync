@@ -290,6 +290,16 @@ window.__ModuleLoader__.load({
               onBlur: () => save({ collectScript: String(val('collectScript', '')) }, '采集脚本'),
             }),
             h('div', { style: css.note }, '用 bash 跑。适合把 ~/.dsh/ 里的配置先采集到某个暂存仓库，再一起推。')),
+          h('div', { style: { display: 'flex', flexDirection: 'column', gap: 4 } },
+            h('span', { style: css.label }, '镜像规则（源 => 目标，一行一条）'),
+            h('textarea', {
+              style: { ...css.input, minHeight: 52, width: '100%', boxSizing: 'border-box', fontFamily: 'ui-monospace, monospace', fontSize: 12 },
+              placeholder: '/home/you/dsh-config => /home/you/dsh-private/config',
+              value: val('mirrors', ''),
+              onChange: (e) => set({ mirrors: e.target.value }),
+              onBlur: () => save({ mirrors: String(val('mirrors', '')) }, '镜像规则'),
+            }),
+            h('div', { style: css.note }, '把采集暂存仓库的内容搬进真正会推送的仓库。用 rsync --delete，目标里多出来的文件会被清掉。')),
           h('div', { style: css.note }, '日志：' + st.log))
       )
     }

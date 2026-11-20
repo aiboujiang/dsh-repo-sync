@@ -1,6 +1,6 @@
 {
   "name": "dsh-repo-sync",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "description": "把工作区里的插件仓库定时提交并推送到 git，带冲突检测与安全闸",
