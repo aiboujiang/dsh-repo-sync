@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+  <!-- 上云：一个仓库往上走的两个箭头，中间用一条同步弧连起来 -->
+  <path d="M11 20.5a7.5 7.5 0 0 1 14-3" stroke="#3b7dd8" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M25 20.5a7.5 7.5 0 0 1-14 3" stroke="#3b7dd8" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M25.8 12.4v5.2h-5.2" stroke="#3b7dd8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10.2 24.6v-5.2h5.2" stroke="#3b7dd8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="18" cy="18.5" r="2.1" fill="#3b7dd8"/>
+</svg>

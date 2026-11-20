@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Repo sync",
+    "description": "Periodically commits and pushes the git repositories in your workspace. It never runs git init, never creates remotes, and never force-pushes; a diverged branch stops and waits for you.",
+    "detail": "docs/DETAIL.md"
+  }
+}

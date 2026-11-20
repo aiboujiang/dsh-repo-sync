@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "仓库同步",
+    "description": "把工作区里的 git 仓库定时提交并推送到远程。不自动 git init、不建远程仓库、不 force push —— 冲突时停下来交给人处理。",
+    "detail": "docs/DETAIL.md"
+  }
+}

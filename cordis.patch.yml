@@ -1,0 +1,3 @@
+- insert:
+    - id: repo-sync
+      name: dsh-repo-sync
